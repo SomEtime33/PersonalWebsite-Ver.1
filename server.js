@@ -12,14 +12,14 @@ app.use(express.json());
 app.use(cors());
 
 
-app.get('/', (req,res)=>{
+// routes
+app.use('/', require('./routes/aboutRoute'));
 
-    res.send('hellow from server')
 
-})
 
-PORT = 5000;
+PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log('server listening on port: ${PORT}');
+    console.log('server is listening:',PORT);
 })
+
