@@ -10,6 +10,6 @@ router.post('/register', userCtrl.registerUser)
 router.post('/login', userCtrl.loginUser)
 
 //verify
-router.post('/verify', userCtrl.verifiedToken)
+router.get('/verify', userCtrl.verifiedToken)
 
 module.exports = router;
