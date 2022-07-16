@@ -2,6 +2,7 @@
 const userSchema = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const auth = require('../middlewares/auth');
 
 
 
@@ -80,7 +81,27 @@ const jwt = require('jsonwebtoken');
 
     //verify
     verifiedToken :async (req, res)=> {
-        res.send('verify user')
+       
+        try {
+            
+            const token = req.header("Authorization")
+            if (!token) return res.send(false)
+
+            jwt.verify(token, process.env.TOKEN_SECRET, async(err, verified)=>{
+                if(err) return res.send(false)
+
+
+                const user = await userSchema.findById(verified.id)
+                if(!user) return res.send(false)
+
+                return res.send(true)
+            })
+
+
+
+        } catch (err) {
+            return res.status(500).json({msg:error.message})
+        }
     }
 
  }
